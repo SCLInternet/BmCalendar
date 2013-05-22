@@ -1,6 +1,6 @@
 {
-    "name": "sclinternet/scl-zf-utilities",
-    "description": "A useful set of classes and interfaces for developping Zend Framework 2 applications",
+    "name": "sclinternet/bm-calendar",
+    "description": "Calendar module which provide the ability to block off days.",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/SCLInternet/SclZfUtilities",
