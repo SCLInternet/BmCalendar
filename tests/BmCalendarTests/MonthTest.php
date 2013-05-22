@@ -2,6 +2,7 @@
 
 namespace BmCalendarTests;
 
+use BmCalendar\Day;
 use BmCalendar\Month;
 use BmCalendar\Year;
 
@@ -65,6 +66,20 @@ class MonthTest extends \PHPUnit_Framework_TestCase
         $month = new Month($year, $monthNo);
 
         $this->assertEquals($noDays, $month->numberOfDays(), "Number of days for $yearNo-$monthNo is incorrect.");
+    }
+
+    /**
+     * Test startDay method.
+     *
+     * @covers BmCalendar\Month::startDay
+     *
+     * @return void
+     */
+    public function testStartDay()
+    {
+        $month = new Month(new Year(2013), 5);
+
+        $this->assertEquals(Day::WEDNESDAY, $month->startDay(), 'The starting day of the month is wrong.');
     }
 
     /**

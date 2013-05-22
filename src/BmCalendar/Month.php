@@ -80,6 +80,20 @@ class Month
     }
 
     /**
+     * Returns the day of the week that the 1st of this month is on.
+     *
+     * @return int
+     */
+    public function startDay()
+    {
+        $dateString = sprintf('%04d-%02d-01', $this->year->value(), $this->month);
+
+        $datetime = new \DateTime($dateString);
+
+        return (int) $datetime->format('N');
+    }
+
+    /**
      * Returns the year object that this month belongs to.
      *
      * @return void

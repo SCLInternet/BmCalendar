@@ -9,16 +9,8 @@ use BmCalendar\Exception\DomainException;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class Day
+class Day implements DayInterface
 {
-    const MONDAY    = 1;
-    const TUESDAY   = 2;
-    const WEDNESDAY = 3;
-    const THURSDAY  = 4;
-    const FRIDAY    = 5;
-    const SATURDAY  = 6;
-    const SUNDAY    = 7;
-
     /**
      * The day this class represents.
      *
@@ -34,7 +26,21 @@ class Day
     protected $month;
 
     /**
-     * __construct
+     * The states this day is in.
+     *
+     * @var DayStateInterface[]
+     */
+    protected $states = array();
+
+    /**
+     * The URL to go to if this day is clicked
+     *
+     * @var string
+     */
+    protected $action;
+
+    /**
+     * {@inheritDoc}
      *
      * @param  int   $day
      * @param  Month $month
@@ -52,7 +58,52 @@ class Day
     }
 
     /**
-     * Returns the month this day belongs to.
+     * Add a state to this day.
+     *
+     * @param  DayStateInterface $state
+     * @return self
+     */
+    public function addState(DayStateInterface $state)
+    {
+        $this->states[$state->uid()] = $state;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return DayStateInterface[]
+     */
+    public function getStates()
+    {
+        return $this->states();
+    }
+
+    /**
+     * Sets the value of action
+     *
+     * @param  string $action
+     * @return self
+     */
+    public function setAction($action)
+    {
+        $this->action = (string) $action;
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @return Month
      */
@@ -62,7 +113,7 @@ class Day
     }
 
     /**
-     * Returns the day of the week.
+     * {@inheritDoc}
      *
      * @return int
      */
@@ -81,7 +132,7 @@ class Day
     }
 
     /**
-     * Return the day number.
+     * {@inheritDoc}
      *
      * @return int
      */
@@ -91,7 +142,7 @@ class Day
     }
 
     /**
-     * Convert the day number to a string.
+     * {@inheritDoc}
      *
      * @return string
      */
