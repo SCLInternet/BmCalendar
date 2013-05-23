@@ -122,4 +122,16 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($output, $result, 'The output didn\'t match.');
     }
+
+    /**
+     * Test the internal rendering of the calendar.
+     *
+     * @covers BmCalendar\View\Helper\Calendar::showMonth
+     *
+     * @return void
+     */
+    public function testShowMonthInternal()
+    {
+        $this->markTestIncomplete('Need to test this.');
+    }
 }

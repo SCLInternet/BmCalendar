@@ -3,8 +3,7 @@
 namespace BmCalendar;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 /**
  * The module class for BmCalendar.
@@ -16,8 +15,7 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface;
  */
 class Module implements
     AutoloaderProviderInterface,
-    ConfigProviderInterface,
-    ServiceProviderInterface
+    ViewHelperProviderInterface
 {
     /**
      * {@inheritDoc}
@@ -35,23 +33,18 @@ class Module implements
         );
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        return array();
-    }
 
     /**
      * {@inheritDoc}
      *
      * @return array
      */
-    public function getServiceConfig()
+    public function getViewHelperConfig()
     {
-        return array();
+        return array(
+            'invokables' => array(
+                'calendar' => 'BmCalendar\View\Helper\Calendar',
+            ),
+        );
     }
 }
