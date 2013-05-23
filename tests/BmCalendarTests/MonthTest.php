@@ -51,7 +51,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * testGetNumberOfDays
      *
      * @dataProvider numberOfDaysProvider
-     * @covers BmCalender\Month::numberOfDays
+     * @covers BmCalendar\Month::numberOfDays
      *
      * @param  int $yearNo
      * @param  int $monthNo
