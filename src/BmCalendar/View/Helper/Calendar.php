@@ -197,13 +197,13 @@ class Calendar extends AbstractHelper
 
         $output .= '<tr>';
 
-        while ($column < $month->startDay()) {
+        while ($column < $month->startDay() - 1) {
             $output .= '<td class="bm-calendar-empty"></td>';
             $column++;
         }
 
         foreach ($days as $day) {
-            if (0 === $column) {
+            if (1 !== $day->value() && 0 === $column) {
                 $output .= '</tr></tr>';
             }
 
