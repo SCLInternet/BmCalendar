@@ -77,7 +77,7 @@ class Day implements DayInterface
      */
     public function getStates()
     {
-        return $this->states();
+        return $this->states;
     }
 
     /**
