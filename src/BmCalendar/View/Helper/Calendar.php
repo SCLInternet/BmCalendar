@@ -121,7 +121,7 @@ class Calendar extends AbstractHelper
         $output  = '<thead>';
         $output .= '<tr>';
 
-        $output .= '<th colspan="7">' . $datetime->format('M') . '</th>';
+        $output .= '<th colspan="7" class="bm-calendar-month-title">' . $datetime->format('M') . '</th>';
 
         $output .= '</tr><tr>';
 
