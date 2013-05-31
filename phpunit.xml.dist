@@ -10,7 +10,7 @@
         backupGlobals="false"
         syntaxCheck="true"
         >
-    <testsuite name="BmCalendarTests">
+    <testsuite name="UnitTests">
         <directory>./tests</directory>
     </testsuite>
     <filter>
@@ -19,6 +19,6 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-clover" target="./clover.xml"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
 </phpunit>
