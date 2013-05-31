@@ -1,6 +1,9 @@
 BmCalendar
 ==========
 
+[![Build Status](https://travis-ci.org/SCLInternet/BmCalendar.png?branch=master)](https://travis-ci.org/SCLInternet/BmCalendar)
+[![Coverage Status](https://coveralls.io/repos/SCLInternet/BmCalendar/badge.png?branch=master)](https://coveralls.io/r/SCLInternet/BmCalendar?branch=master)
+
 Calendar module which provide the ability to block off days.
 
 Installation
