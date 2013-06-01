@@ -59,6 +59,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Check that the Month returned contains the correct value.
      *
      * @covers BmCalendar\Calendar::getMonth
+     * @covers BmCalendar\Calendar::yearOrYearNo
      *
      * @return void
      */
@@ -112,6 +113,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Test for the getMonths method()
      *
      * @covers BmCalendar\Calendar::getMonths
+     * @covers BmCalendar\Calendar::yearOrYearNo
      *
      * @return void
      */
