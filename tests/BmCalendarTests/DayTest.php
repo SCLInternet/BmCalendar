@@ -14,6 +14,33 @@ use BmCalendar\Year;
 class DayTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Check that if the day of the month is less than 1 an exception is thrown.
+     *
+     * @covers BmCalendar\Day::__construct
+     * @expectedException BmCalendar\Exception\DomainException
+     *
+     * @return void
+     */
+    public function testDayValueTooLow()
+    {
+        $day = new Day(new Month(new Year(2013), 5), 0);
+    }
+
+    /**
+     * Check that if the day of the month is greater than the number of days in
+     * the month an exception is thrown.
+     *
+     * @covers BmCalendar\Day::__construct
+     * @expectedException BmCalendar\Exception\DomainException
+     *
+     * @return void
+     */
+    public function testDayValueTooHigh()
+    {
+        $day = new Day(new Month(new Year(2013), 4), 31);
+    }
+
+    /**
      * Test getting the values back from a Day object.
      *
      * @covers BmCalendar\Day::value
