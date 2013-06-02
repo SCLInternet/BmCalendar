@@ -140,6 +140,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Test getDay with a good day provider.
      *
      * @covers BmCalendar\Calendar::getDay
+     * @covers BmCalendar\Calendar::__construct
      *
      * @return void
      */
