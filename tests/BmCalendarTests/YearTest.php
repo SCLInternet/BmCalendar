@@ -12,9 +12,28 @@ use BmCalendar\Year;
 class YearTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Test getting the values back from a Year object.
+     *
+     * @covers BmCalendar\Year::__construct
+     * @covers BmCalendar\Year::value
+     * @covers BmCalendar\Year::__toString
+     *
+     * @return void
+     */
+    public function testValue()
+    {
+        $year = new Year(2053);
+
+        $this->assertEquals(2053, $year->value(), 'The value of the year is incorrect.');
+
+        $this->assertEquals('2053', (string) $year, 'String representation of the year is wrong.');
+    }
+
+    /**
      * Test the is leap function.
      *
      * @covers BmCalendar\Year::isLeap
+     *
      * @return void
      */
     public function testIsLeap()
@@ -31,20 +50,5 @@ class YearTest extends \PHPUnit_Framework_TestCase
         $year = new Year(2002);
         $this->assertFalse($year->isLeap(), '2002 was not a leap year.');
 
-    }
-
-    /**
-     * Test getting the values back from a Year object.
-     *
-     * @covers BmCalendar\Year::value
-     * @covers BmCalendar\Year::__toString
-     */
-    public function testValue()
-    {
-        $year = new Year(2053);
-
-        $this->assertEquals(2053, $year->value(), 'The value of the year is incorrect.');
-
-        $this->assertEquals('2053', (string) $year, 'String representation of the year is wrong.');
     }
 }

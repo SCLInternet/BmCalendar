@@ -127,11 +127,38 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Test the internal rendering of the calendar.
      *
      * @covers BmCalendar\View\Helper\Calendar::showMonth
+     * @covers BmCalendar\View\Helper\Calendar::setRenderer
+     * @covers BmCalendar\View\Helper\Calendar::getRenderer
+     * @depends testSetCalendar
      *
      * @return void
      */
-    public function testShowMonthInternal()
+    public function testShowWithRenderer()
     {
-        $this->markTestIncomplete('Need to test this.');
+        $year   = 2013;
+        $month  = 7;
+        $result = 'Calendar';
+
+        $calendar = $this->getMock('BmCalendar\Calendar');
+
+        $renderer = $this->getMock('BmCalendar\Renderer\CalendarRendererInterface');
+
+        $renderer->expects($this->once())
+                 ->method('setCalendar')
+                 ->with($this->equalTo($calendar));
+
+        $renderer->expects($this->once())
+                 ->method('renderMonth')
+                 ->with($this->equalTo($year), $this->equalTo($month))
+                 ->will($this->returnValue($result));
+
+        $this->helper->__invoke($calendar);
+
+        $this->helper->setRenderer($renderer);
+
+        $this->assertEquals(
+            $result,
+            $this->helper->showMonth($year, $month)
+        );
     }
 }
