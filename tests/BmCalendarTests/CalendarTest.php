@@ -59,6 +59,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Check that the Month returned contains the correct value.
      *
      * @covers BmCalendar\Calendar::getMonth
+     * @covers BmCalendar\Calendar::yearOrYearNo
      *
      * @return void
      */
@@ -95,6 +96,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
     /**
      * Check that an exception is throw if bad parameters are given.
      *
+     * @covers BmCalendar\Calendar::yearOrYearNo
      * @covers BmCalendar\Calendar::getMonth
      * @expectedException BmCalendar\Exception\InvalidArgumentException
      *
@@ -112,6 +114,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Test for the getMonths method()
      *
      * @covers BmCalendar\Calendar::getMonths
+     * @covers BmCalendar\Calendar::yearOrYearNo
      *
      * @return void
      */
@@ -137,6 +140,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      * Test getDay with a good day provider.
      *
      * @covers BmCalendar\Calendar::getDay
+     * @covers BmCalendar\Calendar::__construct
      *
      * @return void
      */
@@ -154,6 +158,57 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
              ->will($this->returnValue($day));
 
         $this->assertEquals($day, $this->calendar->getDay($month, $requestedDay));
+    }
+
+    /**
+     * Test that when a day is created with a value which doesn't match the requested
+     * day then an exception is thrown.
+     *
+     * @covers BmCalendar\Calendar::getDay
+     * @expectedException BmCalendar\Exception\DomainException
+     *
+     * @return void
+     */
+    public function testGetDayWithValueNotMatchingRequestedDay()
+    {
+        $requestedDay = 13;
+
+        $month = $this->calendar->getMonth(1999, 3);
+        $day = new Day($month, 22);
+
+        $this->dayProvider
+             ->expects($this->once())
+             ->method('createDay')
+             ->with($this->equalTo($month), $this->equalTo($requestedDay))
+             ->will($this->returnValue($day));
+
+        $this->calendar->getDay($month, $requestedDay);
+    }
+
+    /**
+     * Test that when a day is created with a value which doesn't match the requested
+     * day then an exception is thrown.
+     *
+     * @covers BmCalendar\Calendar::getDay
+     * @expectedException BmCalendar\Exception\DomainException
+     *
+     * @return void
+     */
+    public function testGetDayWithWrongMonthValue()
+    {
+        $requestedDay = 13;
+
+        $month = $this->calendar->getMonth(1999, 3);
+
+        $day = new Day(new Month(new Year(2000), 1), $requestedDay);
+
+        $this->dayProvider
+             ->expects($this->once())
+             ->method('createDay')
+             ->with($this->equalTo($month), $this->equalTo($requestedDay))
+             ->will($this->returnValue($day));
+
+        $this->calendar->getDay($month, $requestedDay);
     }
 
     /**

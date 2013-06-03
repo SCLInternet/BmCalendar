@@ -20,6 +20,8 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      *
      * @covers BmCalendar\Month::__construct
      * @expectedException BmCalendar\Exception\DomainException
+     *
+     * @return void
      */
     public function testInvalidMonth()
     {
@@ -30,6 +32,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
     /**
      * Test getting the values back from a Month object.
      *
+     * @covers BmCalendar\Month::__construct
      * @covers BmCalendar\Month::value
      * @covers BmCalendar\Month::__toString
      *
@@ -45,6 +48,22 @@ class MonthTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, $month->value(), 'Month value is incorrect.');
 
         $this->assertEquals('5', (string) $month, 'String representation of month is incorrect.');
+    }
+
+    /**
+     * Test getting the values back from a Month object.
+     *
+     * @covers BmCalendar\Month::__construct
+     * @covers BmCalendar\Month::getYear
+     *
+     * @return void
+     */
+    public function testGetYear()
+    {
+        $year = new Year(2015);
+        $month = new Month($year, 5);
+
+        $this->assertEquals($year, $month->getYear(), 'The year object returned is incorrect.');
     }
 
     /**

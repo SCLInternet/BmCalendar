@@ -42,8 +42,14 @@ class Module implements
     public function getViewHelperConfig()
     {
         return array(
-            'invokables' => array(
-                'calendar' => 'BmCalendar\View\Helper\Calendar',
+            'factories' => array(
+                'calendar' => function ($vhm) {
+                    $helper = new \BmCalendar\View\Helper\Calendar();
+
+                    $helper->setRenderer(new \BmCalendar\Renderer\HtmlCalendar());
+
+                    return $helper;
+                }
             ),
         );
     }
