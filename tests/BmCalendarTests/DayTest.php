@@ -5,6 +5,7 @@ namespace BmCalendarTests;
 use BmCalendar\Day;
 use BmCalendar\Month;
 use BmCalendar\Year;
+use BmCalendarTests\State;
 
 /**
  * Unit tests for {@see BmCalendar\Day}.
@@ -87,18 +88,10 @@ class DayTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testStates()
+    public function testGetStates()
     {
-        $state1 = $this->getMock('BmCalendar\DayStateInterface');
-        $state2 = $this->getMock('BmCalendar\DayStateInterface');
-
-        $state1->expects($this->any())
-               ->method('uid')
-               ->will($this->returnValue('A'));
-
-        $state2->expects($this->any())
-               ->method('uid')
-               ->will($this->returnValue('B'));
+        $state1 = new State\MockStateA();
+        $state2 = new State\MockStateB();
 
         $day = new Day(new Month(new Year(2013), 6), 17);
 
@@ -106,8 +99,37 @@ class DayTest extends \PHPUnit_Framework_TestCase
             ->addState($state2);
 
         $this->assertEquals(
-            array('A' => $state1, 'B' => $state2),
-            $day->getStates()
+            array(State\MockStateA::uid() => $state1, State\MockStateB::uid() => $state2),
+            $day->getStates(),
+            'Get states didn\'t return all the states'
+        );
+    }
+
+    /**
+     * Test the getState method.
+     *
+     * @covers BmCalendar\Day::getState
+     * @covers BmCalendar\Day::addState
+     *
+     * @return void
+     */
+    public function testGetState()
+    {
+        $state = new State\MockStateA();
+
+        $day = new Day(new Month(new Year(2013), 6), 17);
+
+        $day->addState($state);
+
+        $this->assertEquals(
+            $state,
+            $day->getState(State\MockStateA::uid()),
+            'Failed to get the requested state.'
+        );
+
+        $this->assertNull(
+            $day->getState(State\MockStateB::uid()),
+            'Get state which doesn\'t exist didn\'t return null.'
         );
     }
 

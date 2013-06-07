@@ -9,6 +9,7 @@
         processIsolation="false"
         backupGlobals="false"
         syntaxCheck="true"
+        bootstrap="./tests/Bootstrap.php"
         >
     <testsuite name="UnitTests">
         <directory>./tests</directory>
