@@ -77,8 +77,8 @@ class HtmlCalendar implements CalendarRendererInterface
         $output .= '<th>Wed</th>';
         $output .= '<th>Thu</th>';
         $output .= '<th>Fri</th>';
-        $output .= '<th class-"' . $weekendClass . '">Sat</th>';
-        $output .= '<th class-"' . $weekendClass . '">Sun</th>';
+        $output .= '<th class="' . $weekendClass . '">Sat</th>';
+        $output .= '<th class="' . $weekendClass . '">Sun</th>';
 
         $output .= '</tr>';
         $output .= '</thead>';
@@ -106,7 +106,10 @@ class HtmlCalendar implements CalendarRendererInterface
             $classes[] = 'bm-calendar-state-' . $state->uid();
         }
 
-        $output  = '<td class="' . implode(' ', $classes) . '">';
+        $output  = '<td>';
+        if (sizeof($classes)) {
+            $output  = '<td class="' . implode(' ', $classes) . '">';
+        }
 
         if ($day->getAction()) {
             $output .= '<a href="' . htmlentities($day->getAction()) . '">' . $day . '</a>';
@@ -152,7 +155,7 @@ class HtmlCalendar implements CalendarRendererInterface
 
         foreach ($days as $day) {
             if (1 !== $day->value() && 0 === $column) {
-                $output .= '</tr></tr>';
+                $output .= '</tr><tr>';
             }
 
             $output .= $this->renderDay($day, $column);
