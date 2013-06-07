@@ -6,6 +6,7 @@ use BmCalendar\Renderer\HtmlCalendar;
 use BmCalendar\Day;
 use BmCalendar\Month;
 use BmCalendar\Year;
+use BmCalendarTests\State\MockStateA;
 
 /**
  * Unit tests for {@see HtmlCalendar}
@@ -137,12 +138,9 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         // Test with a state
         $day = new Day(new Month(new Year(2013), 3), 7);
 
-        $expected = '<td class="bm-calendar-state-super">7</td>';
+        $expected = '<td class="bm-calendar-state-' . MockStateA::uid() . '">7</td>';
 
-        $state = $this->getMock('BmCalendar\DayStateInterface');
-        $state->expects($this->any())
-              ->method('uid')
-              ->will($this->returnValue('super'));
+        $state = new MockStateA();
 
         $day->addState($state);
 
