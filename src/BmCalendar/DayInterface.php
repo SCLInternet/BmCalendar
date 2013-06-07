@@ -26,6 +26,14 @@ interface DayInterface
     public function __construct(Month $month, $day);
 
     /**
+     * Return a specific state by uid.
+     *
+     * @param  string $uid
+     * @return DayStateInterface|null NULL if the date doesn't have a state with the request uid.
+     */
+    public function getState($uid);
+
+    /**
      * Returns a list of states for this day.
      *
      * @return DayStateInterface[]

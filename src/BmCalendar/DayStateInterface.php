@@ -14,5 +14,5 @@ interface DayStateInterface
      *
      * @return string
      */
-    public function uid();
+    public static function uid();
 }
