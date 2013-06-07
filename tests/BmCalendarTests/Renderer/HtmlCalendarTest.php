@@ -51,8 +51,8 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         $expected .= '<th>Wed</th>';
         $expected .= '<th>Thu</th>';
         $expected .= '<th>Fri</th>';
-        $expected .= '<th class-"bm-calendar-weekend">Sat</th>';
-        $expected .= '<th class-"bm-calendar-weekend">Sun</th>';
+        $expected .= '<th class="bm-calendar-weekend">Sat</th>';
+        $expected .= '<th class="bm-calendar-weekend">Sun</th>';
         $expected .= '</tr>';
         $expected .= '</thead>';
 
@@ -71,7 +71,7 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         // 7th March 2013 was a Thursday
         $day = new Day(new Month(new Year(2013), 3), 7);
 
-        $expected = '<td class="">7</td>';
+        $expected = '<td>7</td>';
 
         $this->assertEquals(
             $expected,
@@ -116,7 +116,7 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         $actionUrl = 'http://dosome.action/index?param1=value&param2=value';
         $day->setAction($actionUrl);
 
-        $expected = '<td class=""><a href="'. htmlentities($actionUrl) . '">7</a></td>';
+        $expected = '<td><a href="'. htmlentities($actionUrl) . '">7</a></td>';
 
         $this->assertEquals(
             $expected,
