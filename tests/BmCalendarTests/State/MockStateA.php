@@ -6,7 +6,7 @@ use BmCalendar\DayStateInterface;
 
 class MockStateA implements DayStateInterface
 {
-    public static function uid()
+    public static function type()
     {
         return 'mock-a';
     }

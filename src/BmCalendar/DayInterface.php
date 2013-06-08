@@ -26,12 +26,12 @@ interface DayInterface
     public function __construct(Month $month, $day);
 
     /**
-     * Return a specific state by uid.
+     * Return a specific state by type.
      *
-     * @param  string $uid
-     * @return DayStateInterface|null NULL if the date doesn't have a state with the request uid.
+     * @param  string $type
+     * @return DayStateInterface|null NULL if the date doesn't have a state with the request type.
      */
-    public function getState($uid);
+    public function getState($type);
 
     /**
      * Returns a list of states for this day.

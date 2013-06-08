@@ -103,7 +103,7 @@ class HtmlCalendar implements CalendarRendererInterface
         }
 
         foreach ($day->getStates() as $state) {
-            $classes[] = 'bm-calendar-state-' . $state->uid();
+            $classes[] = 'bm-calendar-state-' . $state->type();
         }
 
         $output  = '<td>';
