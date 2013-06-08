@@ -65,7 +65,7 @@ class Day implements DayInterface
      */
     public function addState(DayStateInterface $state)
     {
-        $this->states[$state::uid()] = $state;
+        $this->states[$state::type()] = $state;
 
         return $this;
     }
@@ -73,16 +73,16 @@ class Day implements DayInterface
     /**
      * {@inheritDoc}
      *
-     * @param  string $uid
-     * @return DayStateInterface|null NULL if the date doesn't have a state with the request uid.
+     * @param  string $type
+     * @return DayStateInterface|null NULL if the date doesn't have a state with the request type.
      */
-    public function getState($uid)
+    public function getState($type)
     {
-        if (!isset($this->states[$uid])) {
+        if (!isset($this->states[$type])) {
             return null;
         }
 
-        return $this->states[$uid];
+        return $this->states[$type];
     }
 
     /**
