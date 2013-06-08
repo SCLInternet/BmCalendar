@@ -138,7 +138,7 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         // Test with a state
         $day = new Day(new Month(new Year(2013), 3), 7);
 
-        $expected = '<td class="bm-calendar-state-' . MockStateA::uid() . '">7</td>';
+        $expected = '<td class="bm-calendar-state-' . MockStateA::type() . '">7</td>';
 
         $state = new MockStateA();
 

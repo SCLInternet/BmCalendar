@@ -99,7 +99,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
             ->addState($state2);
 
         $this->assertEquals(
-            array(State\MockStateA::uid() => $state1, State\MockStateB::uid() => $state2),
+            array(State\MockStateA::type() => $state1, State\MockStateB::type() => $state2),
             $day->getStates(),
             'Get states didn\'t return all the states'
         );
@@ -123,12 +123,12 @@ class DayTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $state,
-            $day->getState(State\MockStateA::uid()),
+            $day->getState(State\MockStateA::type()),
             'Failed to get the requested state.'
         );
 
         $this->assertNull(
-            $day->getState(State\MockStateB::uid()),
+            $day->getState(State\MockStateB::type()),
             'Get state which doesn\'t exist didn\'t return null.'
         );
     }

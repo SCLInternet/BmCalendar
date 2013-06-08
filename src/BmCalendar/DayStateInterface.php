@@ -10,9 +10,9 @@ namespace BmCalendar;
 interface DayStateInterface
 {
     /**
-     * A unique identifier for this state.
+     * A unique identifier for grouping related states together.
      *
      * @return string
      */
-    public static function uid();
+    public static function type();
 }
