@@ -3,6 +3,7 @@
 namespace BmCalendar;
 
 use BmCalendar\Exception\DomainException;
+use BmCalendar\State\DayStateInterface;
 
 /**
  * Day

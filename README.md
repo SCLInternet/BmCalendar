@@ -43,7 +43,15 @@ custom view partial.
 To do this simply call the view helper like so:
 
 ```php
-echo $this->calendar($calendar)->setPartial('partial-name')->showMonth(2013, 05);
+echo $this->calendar($calendar)->setPartial('partial-name')->showMonth(2013, 5);
+```
+
+You can also create your own renderer class by implementing
+`BmCalendar\Renderer\RendererInterface` then tell the view helper to use your
+renderer instead like so:
+
+```php
+echo $this->calendar($calendar)->setRenderer(new MyRenderer())->showMonth(2013, 5);
 ```
 
 The partial will have the following parameters passed to it:
@@ -52,13 +60,12 @@ The partial will have the following parameters passed to it:
 * **$month** - The month to be rendered (int)
 * **$year** - The year that the month to be rendered belongs to (int)
 
-
 Day Providers
 -------------
 
 Day providers are used to add extra states to a day.
 
-States must implement `\BmCalendar\DayStateInterface`.
+States must implement `\BmCalendar\State\DayStateInterface`.
 
 A day provider can be implemented like so:
 
@@ -103,3 +110,49 @@ $provider->database = new AvailabilityDatabasesChecker();
 
 $calendar = new \BmCalendar\Calendar($provider);
 ```
+
+Day States
+----------
+Day states allow you to add values to days in the calendar (e.g. if there is
+an event on on that day).
+
+
+### Creating a day state class
+A day state is a class which implements `BmCalendar\State\DayStateInterface` which
+simply provides a static method called `type()` to identify the state by.
+
+There is also a `BmCalendar\State\AbstractDayState` class available which can be
+directly extended which will implement the `type()` method for you.
+
+You can quickly define a state like so:
+
+```php
+use BmCalendar\State\AbstractDayState;
+
+class HasEventState extends AbstractDayState
+{
+}
+```
+
+### Using day states
+
+To add a state to a `Day` object you simply call the `addState($state)` method:
+
+```php
+$day->addState(new HasEventState())
+```
+
+To get a list of all states attached to a `Day` object you can call
+
+```php
+$day->getStates();
+```
+
+An if you want to check for a specific type of state for a given day you can 
+use the static `type()` method like so:
+
+```php
+$state = $day->getState(HasEventState::type());
+```
+
+If the `Day` doesn't contain a state of the requested type `NULL` is returned.
