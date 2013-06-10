@@ -1,4 +1,10 @@
 <?php
+/**
+  * BmCalendar Module (https://github.com/SCLInternet/BmCalendar)
+  *
+  * @link https://github.com/SCLInternet/BmCalendar for the canonical source repository
+  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+  */
 
 namespace BmCalendarTests;
 
@@ -126,9 +132,22 @@ class DayTest extends \PHPUnit_Framework_TestCase
             $day->getState(State\MockStateA::type()),
             'Failed to get the requested state.'
         );
+    }
+
+    /**
+     * Test the getState with bad type.
+     *
+     * @covers BmCalendar\Day::getState
+     * @covers BmCalendar\Day::addState
+     *
+     * @return void
+     */
+    public function testGetStateWithBadType()
+    {
+        $day = new Day(new Month(new Year(2013), 6), 17);
 
         $this->assertNull(
-            $day->getState(State\MockStateB::type()),
+            $day->getState('xxx'),
             'Get state which doesn\'t exist didn\'t return null.'
         );
     }
