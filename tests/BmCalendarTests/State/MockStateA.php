@@ -2,12 +2,8 @@
 
 namespace BmCalendarTests\State;
 
-use BmCalendar\DayStateInterface;
+use BmCalendar\State\AbstractDayState;
 
-class MockStateA implements DayStateInterface
+class MockStateA extends AbstractDayState
 {
-    public static function type()
-    {
-        return 'mock-a';
-    }
 }

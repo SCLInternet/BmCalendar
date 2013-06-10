@@ -1,6 +1,6 @@
 <?php
 
-namespace BmCalendar;
+namespace BmCalendar\State;
 
 /**
  * Implement this with different states to be attached to Days.

@@ -2,6 +2,8 @@
 
 namespace BmCalendar;
 
+use BmCalendar\State\DayStateInterface;
+
 /**
  * DayInterface
  *
