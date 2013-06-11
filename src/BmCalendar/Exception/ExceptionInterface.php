@@ -9,10 +9,10 @@
 namespace BmCalendar\Exception;
 
 /**
- * DomainException for BmCalendar.
+ * Interface which can be used to identify any exception thrown by BmCalendar.
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class DomainException extends \DomainException implements ExceptionInterface
+interface ExceptionInterface
 {
 }

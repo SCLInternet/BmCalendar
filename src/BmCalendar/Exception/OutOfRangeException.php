@@ -9,10 +9,11 @@
 namespace BmCalendar\Exception;
 
 /**
- * Interface which can be used to identify any exception thrown by BmCalendar.
+ * OutOfRangeException
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-interface CalendarExceptionInterface
+class OutOfRangeException extends \OutOfRangeException implements
+    ExceptionInterface
 {
 }

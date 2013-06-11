@@ -8,7 +8,7 @@
 
 namespace BmCalendar;
 
-use BmCalendar\Exception\DomainException;
+use BmCalendar\Exception\OutOfRangeException;
 use BmCalendar\State\DayStateInterface;
 
 /**
@@ -57,7 +57,7 @@ class Day implements DayInterface
         $day = (int) $day;
 
         if ($day < 1 || $day > $month->numberOfDays()) {
-            throw new DomainException('$day value of "' . $day . '" is out of range.');
+            throw new OutOfRangeException('$day value of "' . $day . '" is out of range.');
         }
 
         $this->day = $day;

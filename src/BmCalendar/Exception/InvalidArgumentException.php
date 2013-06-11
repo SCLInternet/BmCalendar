@@ -14,6 +14,6 @@ namespace BmCalendar\Exception;
  * @author Tom Oram <tom@scl.co.uk>
  */
 class InvalidArgumentException extends \InvalidArgumentException implements
-    CalendarExceptionInterface
+    ExceptionInterface
 {
 }
