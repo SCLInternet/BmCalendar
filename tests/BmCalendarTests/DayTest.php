@@ -24,7 +24,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
      * Check that if the day of the month is less than 1 an exception is thrown.
      *
      * @covers BmCalendar\Day::__construct
-     * @expectedException BmCalendar\Exception\DomainException
+     * @expectedException BmCalendar\Exception\OutOfRangeException
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
      * the month an exception is thrown.
      *
      * @covers BmCalendar\Day::__construct
-     * @expectedException BmCalendar\Exception\DomainException
+     * @expectedException BmCalendar\Exception\OutOfRangeException
      *
      * @return void
      */
