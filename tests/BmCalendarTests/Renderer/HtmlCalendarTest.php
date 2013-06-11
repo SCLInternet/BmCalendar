@@ -70,20 +70,21 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
      * Test the output of renderDay with a week day with no state or action.
      *
      * @covers BmCalendar\Renderer\HtmlCalendar::renderDay
+     * @dataProvider weekdayProvider
      *
      * @return void
      */
-    public function testRenderDayWithWeekday()
+    public function testRenderDayWithWeekday($dom, $dayName)
     {
         // 7th March 2013 was a Thursday
-        $day = new Day(new Month(new Year(2013), 3), 7);
+        $day = new Day(new Month(new Year(2013), 3), $dom);
 
-        $expected = '<td>7</td>';
+        $expected = '<td>' . $dom . '</td>';
 
         $this->assertEquals(
             $expected,
             $this->renderer->renderDay($day),
-            'Error on week day with no states or action'
+            'Error on week day ' . $dayName .  ' with no states or action'
         );
     }
 
@@ -91,20 +92,40 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
      * Test the output of renderDay with a weekend day with no state or action.
      *
      * @covers BmCalendar\Renderer\HtmlCalendar::renderDay
-     *
+     * @dataProvider weekendProvider
+     * 
      * @return void
      */
-    public function testRenderDayWithWeekendDay()
+    public function testRenderDayWithWeekendDay($dom, $dayName)
     {
         // 9th March 2013 was a Saturday
-        $day = new Day(new Month(new Year(2013), 3), 9);
+        $day = new Day(new Month(new Year(2013), 3), $dom);
 
-        $expected = '<td class="bm-calendar-weekend">9</td>';
+        $expected = '<td class="bm-calendar-weekend">' . $dom . '</td>';
 
         $this->assertEquals(
             $expected,
             $this->renderer->renderDay($day),
-            'Error on weekend day with no states or action'
+            'Error on ' . $dayName . ' day with no states or action'
+        );
+    }
+
+    public function weekendProvider()
+    {
+        return array(
+            array(9, 'Saturday'),
+            array(10, 'Sunday')
+        );
+    }
+
+    public function weekdayProvider()
+    {
+        return array(
+            array(11,'Monday'),
+            array(12,'Tuesday'),
+            array(13,'Wednesday'),
+            array(14,'Thursday'),
+            array(15,'Friday'),
         );
     }
 

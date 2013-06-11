@@ -104,7 +104,7 @@ class HtmlCalendar implements CalendarRendererInterface
 
         $dayOfWeek = $day->dayOfWeek();
 
-        if (5 === $dayOfWeek || 6 === $dayOfWeek) {
+        if (6 === $dayOfWeek || 7 === $dayOfWeek) {
             $classes[] = 'bm-calendar-weekend';
         }
 
