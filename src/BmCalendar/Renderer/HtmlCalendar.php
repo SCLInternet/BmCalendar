@@ -40,6 +40,21 @@ class HtmlCalendar implements CalendarRendererInterface
     );
 
     /**
+     * The names of the 7 days of the week.
+     *
+     * @var string[]
+     */
+    protected static $dayNames = array(
+        DayInterface::MONDAY    => 'Mon',
+        DayInterface::TUESDAY   => 'Tue',
+        DayInterface::WEDNESDAY => 'Wed',
+        DayInterface::THURSDAY  => 'Thu',
+        DayInterface::FRIDAY    => 'Fri',
+        DayInterface::SATURDAY  => 'Sat',
+        DayInterface::SUNDAY    => 'Sun',
+    );
+
+    /**
      * The calendar.
      *
      * @var Calendar
@@ -78,13 +93,13 @@ class HtmlCalendar implements CalendarRendererInterface
 
         $output .= '</tr><tr>';
 
-        $output .= '<th>Mon</th>';
-        $output .= '<th>Tue</th>';
-        $output .= '<th>Wed</th>';
-        $output .= '<th>Thu</th>';
-        $output .= '<th>Fri</th>';
-        $output .= '<th class="' . $weekendClass . '">Sat</th>';
-        $output .= '<th class="' . $weekendClass . '">Sun</th>';
+        $output .= '<th>' . self::$dayNames[DayInterface::MONDAY] . '</th>';
+        $output .= '<th>' . self::$dayNames[DayInterface::TUESDAY] . '</th>';
+        $output .= '<th>' . self::$dayNames[DayInterface::WEDNESDAY] . '</th>';
+        $output .= '<th>' . self::$dayNames[DayInterface::THURSDAY] . '</th>';
+        $output .= '<th>' . self::$dayNames[DayInterface::FRIDAY] . '</th>';
+        $output .= '<th class="' . $weekendClass . '">' . self::$dayNames[DayInterface::SATURDAY] . '</th>';
+        $output .= '<th class="' . $weekendClass . '">' . self::$dayNames[DayInterface::SUNDAY] . '</th>';
 
         $output .= '</tr>';
         $output .= '</thead>';
