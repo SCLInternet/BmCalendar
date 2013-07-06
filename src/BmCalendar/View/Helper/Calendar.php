@@ -9,7 +9,9 @@
 namespace BmCalendar\View\Helper;
 
 use BmCalendar\Calendar as CalendarObject;
+use BmCalendar\DayInterface;
 use BmCalendar\Day;
+use BmCalendar\Exception\OutOfRangeException;
 use BmCalendar\Month;
 use BmCalendar\Renderer\CalendarRendererInterface as Renderer;
 use Zend\View\Helper\AbstractHelper;
@@ -43,6 +45,13 @@ class Calendar extends AbstractHelper
     protected $renderer;
 
     /**
+     * The day to start a week on.
+     *
+     * @var mixed
+     */
+    protected $startDay = DayInterface::MONDAY;
+
+    /**
      * Returns the {@see CalendarObject} to be rendered.
      *
      * @return CalendarObject
@@ -72,6 +81,38 @@ class Calendar extends AbstractHelper
     public function getPartial()
     {
         return $this->partial;
+    }
+
+    /**
+     * Set which day to display as the starting day of the week.
+     *
+     * @param  int  $startDay
+     * @return self
+     */
+    public function setStartDay($startDay)
+    {
+        $startDay = (int) $startDay;
+
+        if ($startDay < 1 || $startDay > 7) {
+            throw new OutOfRangeException(
+                "'$startDay' is an invalid value for \$startDay in '"
+                . __METHOD__
+            );
+        }
+
+        $this->startDay = $startDay;
+
+        return $this;
+    }
+
+    /**
+     * Sets which day of the week the rendering will begin on.
+     *
+     * @return void
+     */
+    public function getStartDay()
+    {
+        return $this->startDay;
     }
 
     /**
@@ -112,6 +153,7 @@ class Calendar extends AbstractHelper
 
             $params = array(
                 'calendar' => $this->calendar,
+                'startDay' => $this->startDay,
                 'year'     => $year,
                 'month'    => $month,
             );
@@ -119,9 +161,12 @@ class Calendar extends AbstractHelper
             return $partial($this->partial, $params);
         }
 
-        $this->getRenderer()->setCalendar($this->calendar);
+        $renderer = $this->getRenderer();
 
-        return $this->getRenderer()->renderMonth($year, $month);
+        $renderer->setCalendar($this->calendar);
+        $renderer->setStartDay($this->startDay);
+
+        return $renderer->renderMonth($year, $month);
     }
 
     /**
@@ -137,6 +182,7 @@ class Calendar extends AbstractHelper
     {
         $this->calendar = $calendar;
         $this->partial = null;
+
         return $this;
     }
 }

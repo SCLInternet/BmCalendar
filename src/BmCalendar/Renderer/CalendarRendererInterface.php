@@ -26,6 +26,14 @@ interface CalendarRendererInterface
     public function setCalendar(Calendar $calendar);
 
     /**
+     * Set which day to display as the starting day of the week.
+     *
+     * @param  int  $startDay
+     * @return self
+     */
+    public function setStartDay($day);
+
+    /**
      * Render a month table.
      *
      * @param  int $yearNo

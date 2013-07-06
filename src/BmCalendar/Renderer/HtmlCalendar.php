@@ -10,6 +10,7 @@ namespace BmCalendar\Renderer;
 
 use BmCalendar\Calendar;
 use BmCalendar\DayInterface;
+use BmCalendar\Exception\OutOfRangeException;
 use BmCalendar\Month;
 
 /**
@@ -62,6 +63,13 @@ class HtmlCalendar implements CalendarRendererInterface
     protected $calendar;
 
     /**
+     * The day to start a week on.
+     *
+     * @var mixed
+     */
+    protected $startDay = DayInterface::MONDAY;
+
+    /**
      * {@inheritDoc}
      *
      * @param  Calendar $calendar
@@ -70,6 +78,28 @@ class HtmlCalendar implements CalendarRendererInterface
     public function setCalendar(Calendar $calendar)
     {
         $this->calendar = $calendar;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param  int  $startDay
+     * @return self
+     */
+    public function setStartDay($startDay)
+    {
+        $startDay = (int) $startDay;
+
+        if ($startDay < 1 || $startDay > 7) {
+            throw new OutOfRangeException(
+                "'$startDay' is an invalid value for \$startDay in '"
+                . __METHOD__
+            );
+        }
+
+        $this->startDay = $startDay;
 
         return $this;
     }
@@ -93,13 +123,18 @@ class HtmlCalendar implements CalendarRendererInterface
 
         $output .= '</tr><tr>';
 
-        $output .= '<th>' . self::$dayNames[DayInterface::MONDAY] . '</th>';
-        $output .= '<th>' . self::$dayNames[DayInterface::TUESDAY] . '</th>';
-        $output .= '<th>' . self::$dayNames[DayInterface::WEDNESDAY] . '</th>';
-        $output .= '<th>' . self::$dayNames[DayInterface::THURSDAY] . '</th>';
-        $output .= '<th>' . self::$dayNames[DayInterface::FRIDAY] . '</th>';
-        $output .= '<th class="' . $weekendClass . '">' . self::$dayNames[DayInterface::SATURDAY] . '</th>';
-        $output .= '<th class="' . $weekendClass . '">' . self::$dayNames[DayInterface::SUNDAY] . '</th>';
+        // Display the headings for the days of the week.
+        for ($column = 0; $column < 7; $column++) {
+            $day = ($column + $this->startDay - 1) % 7 + 1;
+
+            if (DayInterface::SATURDAY === $day || DayInterface::SUNDAY === $day) {
+                $output .= '<th class="' . $weekendClass . '">';
+            } else {
+                $output .= '<th>';
+            }
+            $output .= self::$dayNames[$day];
+            $output .=  '</th>';
+        }
 
         $output .= '</tr>';
         $output .= '</thead>';
@@ -169,7 +204,9 @@ class HtmlCalendar implements CalendarRendererInterface
 
         $output .= '<tr>';
 
-        while ($column < $month->startDay() - 1) {
+        $blankCells = ($month->startDay() - $this->startDay + 7) % 7;
+
+        while ($column < $blankCells) {
             $output .= '<td class="bm-calendar-empty"></td>';
             $column++;
         }

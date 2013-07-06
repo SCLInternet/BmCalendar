@@ -8,6 +8,7 @@
 
 namespace BmCalendarTests\View\Helper;
 
+use BmCalendar\DayInterface;
 use BmCalendar\View\Helper\Calendar;
 
 /**
@@ -43,6 +44,58 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
         $this->view = $this->getMock('Zend\View\Renderer\PhpRenderer');
 
         $this->helper->setView($this->view);
+    }
+
+    /**
+     * Test that set start day with a bad value raises and exception.
+     *
+     * @covers            BmCalendar\View\Helper\Calendar::setStartDay
+     * @expectedException BmCalendar\Exception\OutOfRangeException
+     *
+     * @return void
+     */
+    public function testSetStartDayWithInvalidValue()
+    {
+        $this->helper->setStartDay(8);
+    }
+
+    /**
+     * Test that the getStartDay and setStartDay methods work as expected.
+     *
+     * @covers BmCalendar\View\Helper\Calendar::setStartDay
+     * @covers BmCalendar\View\Helper\Calendar::getStartDay
+     *
+     * @return void
+     */
+    public function testSetGetStartDay()
+    {
+        $this->assertEquals(
+            DayInterface::MONDAY,
+            $this->helper->getStartDay(),
+            'Start day was not initialised to Monday'
+        );
+
+        $days = array(
+            DayInterface::MONDAY,
+            DayInterface::TUESDAY,
+            DayInterface::WEDNESDAY,
+            DayInterface::THURSDAY,
+            DayInterface::FRIDAY,
+            DayInterface::SATURDAY,
+            DayInterface::SUNDAY,
+        );
+
+        foreach ($days as $day) {
+            $result = $this->helper->setStartDay($day);
+
+            $this->assertSame($this->helper, $result, 'setStartDay() did not return $this');
+
+            $this->assertEquals(
+                $day,
+                $this->helper->getStartDay(),
+                'getStartDay() returnered incorrect value for ' . $day . '.'
+            );
+        }
     }
 
     /**
@@ -101,10 +154,12 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
         $partialName = 'the-partial';
         $year = 2013;
         $month = 7;
+        $startDay = 5;
 
         $calendar = $this->getMock('BmCalendar\Calendar');
         $params = array(
             'calendar' => $calendar,
+            'startDay' => $startDay,
             'year'     => $year,
             'month'    => $month,
         );
@@ -123,6 +178,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
 
         $this->helper->__invoke($calendar);
         $this->helper->setPartial($partialName);
+        $this->helper->setStartDay($startDay);
 
         $result = $this->helper->showMonth($year, $month);
 
@@ -141,9 +197,10 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
      */
     public function testShowWithRenderer()
     {
-        $year   = 2013;
-        $month  = 7;
-        $result = 'Calendar';
+        $year     = 2013;
+        $month    = 7;
+        $result   = 'Calendar';
+        $startDay = 3;
 
         $calendar = $this->getMock('BmCalendar\Calendar');
 
@@ -154,9 +211,15 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
                  ->with($this->equalTo($calendar));
 
         $renderer->expects($this->once())
+                 ->method('setStartDay')
+                 ->with($this->equalTo($startDay));
+
+        $renderer->expects($this->once())
                  ->method('renderMonth')
                  ->with($this->equalTo($year), $this->equalTo($month))
                  ->will($this->returnValue($result));
+
+        $this->helper->setStartDay($startDay);
 
         $this->helper->__invoke($calendar);
 
