@@ -36,17 +36,25 @@ echo $this->calendar($calendar)->showMonth(2013, 05);
 The View Helper
 ---------------
 
-By default the view helper will render a month in a simple HTML table. If you
-wish to further customise the output you can do this by rendering using a
-custom view partial.
+By default the view helper will render a month in a simple HTML table created by 
+`BmCalendar\Renderer\HtmlCalendar`.
 
-To do this simply call the view helper like so:
+Changing the start day
+======================
+
+By default the calendar will render with Monday days in the first column, if 
+you wish to change this you can invoke the view helper like so.
 
 ```php
-echo $this->calendar($calendar)->setPartial('partial-name')->showMonth(2013, 5);
+echo $this->calendar($calendar)
+          ->setStartDay(\BmCalendar\DayInterface::WEDNESDAY)
+          ->showMonth(2013, 5);
 ```
 
-You can also create your own renderer class by implementing
+Renderer Classes
+================
+
+You can also create your own renderer classes by implementing
 `BmCalendar\Renderer\RendererInterface` then tell the view helper to use your
 renderer instead like so:
 
@@ -54,8 +62,21 @@ renderer instead like so:
 echo $this->calendar($calendar)->setRenderer(new MyRenderer())->showMonth(2013, 5);
 ```
 
+Partials
+========
+
+Alternatively you can customise the rendering process by using partial templates.
+
+
+To do this simply call the view helper like so:
+
+```php
+echo $this->calendar($calendar)->setPartial('partial-name')->showMonth(2013, 5);
+```
+
 The partial will have the following parameters passed to it:
 
+* **$startDay** - The day of the week to start the calendar on (int 1-7)
 * **$calendar** - An instance of `BmCalendar\Calendar`
 * **$month** - The month to be rendered (int)
 * **$year** - The year that the month to be rendered belongs to (int)

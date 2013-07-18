@@ -39,6 +39,19 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that set start day with a bad value raises and exception.
+     *
+     * @covers            BmCalendar\Renderer\HtmlCalendar::setStartDay
+     * @expectedException BmCalendar\Exception\OutOfRangeException
+     *
+     * @return void
+     */
+    public function testSetStartDayWithInvalidValue()
+    {
+        $this->renderer->setStartDay(8);
+    }
+
+    /**
      * Test the output of monthTitle.
      *
      * @covers BmCalendar\Renderer\HtmlCalendar::monthTitle
@@ -62,6 +75,37 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
         $expected .= '<th class="bm-calendar-weekend">Sun</th>';
         $expected .= '</tr>';
         $expected .= '</thead>';
+
+        $this->assertEquals($expected, $this->renderer->monthTitle($month));
+    }
+
+    /**
+     * Test the output of monthTitle starting on a Wednesday.
+     *
+     * @covers BmCalendar\Renderer\HtmlCalendar::setStartDay
+     * @covers BmCalendar\Renderer\HtmlCalendar::monthTitle
+     *
+     * @return void
+     */
+    public function testMonthTitleStartingOnWednesday()
+    {
+        $month = new Month(new Year(2013), 3);
+
+        $expected  = '<thead>';
+        $expected .= '<tr>';
+        $expected .= '<th colspan="7" class="bm-calendar-month-title">March</th>';
+        $expected .= '</tr><tr>';
+        $expected .= '<th>Wed</th>';
+        $expected .= '<th>Thu</th>';
+        $expected .= '<th>Fri</th>';
+        $expected .= '<th class="bm-calendar-weekend">Sat</th>';
+        $expected .= '<th class="bm-calendar-weekend">Sun</th>';
+        $expected .= '<th>Mon</th>';
+        $expected .= '<th>Tue</th>';
+        $expected .= '</tr>';
+        $expected .= '</thead>';
+
+        $this->renderer->setStartDay(Day::WEDNESDAY);
 
         $this->assertEquals($expected, $this->renderer->monthTitle($month));
     }
@@ -93,7 +137,7 @@ class HtmlCalendarTests extends \PHPUnit_Framework_TestCase
      *
      * @covers BmCalendar\Renderer\HtmlCalendar::renderDay
      * @dataProvider weekendProvider
-     * 
+     *
      * @return void
      */
     public function testRenderDayWithWeekendDay($dom, $dayName)
